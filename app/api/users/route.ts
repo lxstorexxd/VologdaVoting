@@ -5,23 +5,27 @@ interface Nomination {
     id: number;
     name: string;
     votes: number;
-    contestants: Contestant[]; // Где Contestant - тип участника
+    contestants: Contestant[];
 }
 
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
-    const nomination = await prisma.nomination.findMany();
-    const data: Nomination[] = await Promise.all(
-        nomination.map(async (nomination: any) => {
-            const contestants: Contestant[] = await prisma.contestant.findMany({
-                where: { nominationId: nomination.id },
-            });
-            return { ...nomination, contestants };
-        })
-    );
+    try {
+        const nomination = await prisma.nomination.findMany();
+        const data: Nomination[] = await Promise.all(
+            nomination.map(async (nomination: any) => {
+                const contestants: Contestant[] = await prisma.contestant.findMany({
+                    where: { nominationId: nomination.id },
+                });
+                return { ...nomination, contestants };
+            })
+        );
 
-    return NextResponse.json(data);
+        return NextResponse.json(data);
+    } catch (e) {
+        return NextResponse.json(e);
+    }
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
