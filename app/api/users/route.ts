@@ -26,6 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     } catch (e) {
         return NextResponse.json(e);
     }
+
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
