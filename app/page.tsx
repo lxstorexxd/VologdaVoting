@@ -15,7 +15,13 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('/api/users');
+      const response = await fetch('/api/users/', {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+      );
       if (response.ok) {
         const result = await response.json();
         setNominations(result);
@@ -28,6 +34,9 @@ export default function Home() {
   const handleVote = (nominationId: number) => {
     fetch(`/api/users/`, {
       method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(nominationId),
     })
       .then((response) => {
@@ -45,7 +54,7 @@ export default function Home() {
           });
           setNominations(updatedNominations);
         } else {
-          console.error('Failed to vote:', response.statusText);  
+          console.error('Failed to vote:', response.statusText);
         }
 
       })
