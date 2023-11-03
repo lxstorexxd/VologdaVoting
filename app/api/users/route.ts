@@ -11,22 +11,17 @@ interface Nomination {
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest, res: NextResponse) {
-    try {
-        const nomination = await prisma.nomination.findMany();
-        const data: Nomination[] = await Promise.all(
-            nomination.map(async (nomination: any) => {
-                const contestants: Contestant[] = await prisma.contestant.findMany({
-                    where: { nominationId: nomination.id },
-                });
-                return { ...nomination, contestants };
-            })
-        );
+    const nomination = await prisma.nomination.findMany();
+    const data: Nomination[] = await Promise.all(
+        nomination.map(async (nomination: any) => {
+            const contestants: Contestant[] = await prisma.contestant.findMany({
+                where: { nominationId: nomination.id },
+            });
+            return { ...nomination, contestants };
+        })
+    );
 
-        return NextResponse.json(data);
-    } catch (e) {
-        return NextResponse.json(e);
-    }
-
+    return NextResponse.json(data);
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {

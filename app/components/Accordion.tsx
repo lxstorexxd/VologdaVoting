@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
 import classNames from 'classnames';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import './styles.css';
+import Wrapper from '@/app/components/wrapper';
 
 
 interface AccordionProps {
@@ -55,13 +56,14 @@ const AccordionExample = ({ data, onVote }: { data: any; onVote: (nominationId: 
                 <AccordionContent>
                     {
                         data.contestants.map((option: Nomination) => (
-                            <div key={option.id} className="flex justify-between items-center flex-col sm:flex-row sm:px-4 sm:py-4 p-0">
+                            <div key={option.id} className="flex justify-between items-center flex-col py-2 sm:flex-row sm:px-4 sm:py-4 p-0 border-b border-solid border-gray-200">
                                 <div>
-                                    <h1 className="text-xl font-semibold">{option.name}</h1>
+                                    <h1 className="text-xl font-semibold md:text-left text-center">{option.name}</h1>
                                     <p className="text-lg sm:text-left text-center">Голосов: <b>{option.votes}</b></p>
                                 </div>
                                 <div>
-                                    <button onClick={() => onVote(option.id)} className="px-4 py-2 bg-[#336AEA] text-white rounded-lg sm:m-0 mt-4" type="submit">Голосовать</button>
+                                    <Wrapper onVote={onVote} optionId={option.id} />
+                                    {/* <button onClick={() => setIsModalOpen(!isModalOpen)} className="px-4 py-2 bg-[#336AEA] text-white rounded-lg sm:m-0 mt-4" type="submit">Голосовать</button> */}
                                 </div>
                             </div>
                         ))
