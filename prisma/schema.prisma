@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.db"
+}
+
+
+model Nomination {
+  id           Int           @id @default(autoincrement())
+  name         String
+  contestants  Contestant[]
+}
+
+model Contestant {
+  id           Int           @id @default(autoincrement())
+  name         String
+  votes        Int           @default(0)
+  nomination   Nomination    @relation(fields: [nominationId], references: [id])
+  nominationId Int
+}
+
