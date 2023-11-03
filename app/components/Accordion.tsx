@@ -31,6 +31,8 @@ const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionProps>(
     )
 );
 
+AccordionTrigger.displayName = 'AccordionTrigger';
+
 const AccordionContent = React.forwardRef<HTMLDivElement, AccordionProps>(
     ({ children, className, ...props }, forwardedRef) => (
         <Accordion.Content
@@ -43,6 +45,7 @@ const AccordionContent = React.forwardRef<HTMLDivElement, AccordionProps>(
     )
 );
 
+AccordionContent.displayName = 'AccordionContent';
 
 const AccordionExample = ({ data, onVote }: { data: any; onVote: (nominationId: number) => void }) => {
     return (
