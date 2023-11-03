@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       const response = await fetch('/api/users/');
-      console.log(response);
+      console.log(response.json());
       if (response.ok) {
         const result = await response.json();
         setNominations(result);
